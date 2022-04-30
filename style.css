@@ -89,13 +89,14 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     font-family: "Roboto", sans-serif;
+    position: relative;
 }
 
 /* HEADER SECTION */
 /* ///////////////////////////////////////////////////////////////////////////////////////////// */
 
 header {
-    padding: 50px;
+    padding: 10px;
     color: white;
 }
 
@@ -140,4 +141,156 @@ header h1 {
     margin: auto;
     font-size: 1.5rem;
     font-weight: 400;
+}
+
+/* CARD CONTAINERS */
+/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+
+.dealer-card-container,
+.user-card-container {
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.card {
+  /* background-image: url("./resources/playing-card-back.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat; */
+  height: 150px;
+  width: 100px;
+  background-color: white;
+  position: relative;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.card-top {
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  font-size: 1.75rem;
+}
+
+.card-suit {
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-bottom {
+  position: absolute;
+  bottom: 2px;
+  right: 10px;
+  font-size: 1.75rem;
+}
+
+.spades,
+.clubs {
+  color: black;
+}
+
+.hearts,
+.diamonds {
+  color: red;
+}
+
+/* Hit Button */
+/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+
+#hitBtn {
+  background-color: white;
+  border: none;
+  border-radius: 100px;
+  display: flex;
+  margin: auto;
+  width: 75px;
+  height: 75px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.1s;
+}
+
+#hitBtn:hover {
+  cursor: pointer;
+  background-color: darkred;
+  color: gainsboro;
+  box-shadow: 0 0 10px 10px gainsboro;
+}
+
+#hitBtn:active {
+  box-shadow: 0 0 2px 2px gainsboro;
+}
+
+
+#hitBtn h2{
+  margin: auto;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+/* CARD CONTAINERS */
+/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+
+.bottom-container {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.chips-wrapper {
+  display: flex;
+}
+
+.chip {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  color: darkgoldenrod;
+  border: 0.2rem solid darkgoldenrod;
+}
+
+.chip:hover {
+  cursor: pointer;
+}
+
+#chip1 {
+  background-color: black;
+}
+
+#chip5 {
+  background-color: darkred;
+}
+
+#chip10 {
+  background-color: white;
+}
+
+#chip20 {
+  background-color: green;
+}
+
+#chip50 {
+  background-color: orangered;
+}
+
+#chip100 {
+  background-color: yellow;
+}
+
+#chip500 {
+  background-color: blue;
+}
+
+.bottom-container h2 {
+  margin-right: 30px;
 }

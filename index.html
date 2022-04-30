@@ -13,23 +13,72 @@
             <h2>Welcome to</h2>
             <h1>Dave's Blackjack</h1>
         </header>
+
         <div id="newGame">
             <h2>New Game</h2>
         </div>
+
         <section class="dealer-card-container">
             <div class="card">
                 <h2 class="card-top">A</h2>
-                <img class="card-suit" src="./resources/spade.jpg">
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
+            </div>
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
+            </div>
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
+            </div>
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
                 <h2 class="card-bottom">A</h2>
             </div>
         </section>
-        <section class="user-card-container"></section>
-        <section class="bottom-container">
-            <div class="chips-wrapper"></div>
-            <div id="hitBtn">
-                <h2>HIT</h2>
+
+        <section class="user-card-container">
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
             </div>
-            <h2>Balance: $<span id="userBalance">1500</span></h2>
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
+            </div>
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
+            </div>
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/heart.png">
+                <h2 class="card-bottom">A</h2>
+            </div>
+        </section>
+        
+        <div id="hitBtn">
+            <h2>HIT</h2>
+        </div>
+
+        <section class="bottom-container">
+            <div class="chips-wrapper">
+                <h2 id="chip1" class="chip">$1</h2>
+                <h2 id="chip5" class="chip">$5</h2>
+                <h2 id="chip10" class="chip">$10</h2>
+                <h2 id="chip20" class="chip">$20</h2>
+                <h2 id="chip50" class="chip">$50</h2>
+                <h2 id="chip100" class="chip">$100</h2>
+                <h2 id="chip500" class="chip">$500</h2>
+            </div>
+            <h2>Current Bet: $<span id="currentBet">200</span><br/>Balance: $<span id="userBalance">1500</span></h2>
         </section>
 
         
