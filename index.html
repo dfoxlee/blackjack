@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Dave's Blackjack</title>
+        <meta name="description" content="Blackjack game created as a coding project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <header>
+            <h2>Welcome to</h2>
+            <h1>Dave's Blackjack</h1>
+        </header>
+        <div id="newGame">
+            <h2>New Game</h2>
+        </div>
+        <section class="dealer-card-container">
+            <div class="card">
+                <h2 class="card-top">A</h2>
+                <img class="card-suit" src="./resources/spade.jpg">
+                <h2 class="card-bottom">A</h2>
+            </div>
+        </section>
+        <section class="user-card-container"></section>
+        <section class="bottom-container">
+            <div class="chips-wrapper"></div>
+            <div id="hitBtn">
+                <h2>HIT</h2>
+            </div>
+            <h2>Balance: $<span id="userBalance">1500</span></h2>
+        </section>
+
+        
+        <script src="./app.js" async defer></script>
+    </body>
+</html>

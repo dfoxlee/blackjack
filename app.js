@@ -1,0 +1,193 @@
+let deck = [];
+let userHand = [];
+let dealerHand = [];
+
+function makeDeck() {
+    deck = [];
+    let index;
+    
+    for(let j=0; j<4; j++) {
+        for(let i=2; i<15; i++) {
+            if(j == 0) {
+                //Spades
+                index = Math.floor(Math.random()*52);
+
+                while(deck[index] != undefined) {
+                    index = Math.floor(Math.random()*52);
+                }
+
+                if(i < 11){
+                    deck[index] = `S${i}`;
+                }else if(i == 11) {
+                    deck[index] = "SJ";
+                }else if(i == 12) {
+                    deck[index] = "SQ";
+                }else if(i == 13) {
+                    deck[index] = "SK";
+                }else if(i == 14) {
+                    deck[index] = "SA";
+                }
+
+            }else if(j ==1) {
+                // Hearts
+                index = Math.floor(Math.random()*52);
+
+                while(deck[index] != undefined) {
+                    index = Math.floor(Math.random()*52);
+                }
+
+                if(i < 11){
+                    deck[index] = `H${i}`;
+                }else if(i == 11) {
+                    deck[index] = "HJ";
+                }else if(i == 12) {
+                    deck[index] = "HQ";
+                }else if(i == 13) {
+                    deck[index] = "HK";
+                }else if(i == 14) {
+                    deck[index] = "HA";
+                }
+
+            }else if(j == 2) {
+                // Clubs
+                index = Math.floor(Math.random()*52);
+
+                while(deck[index] != undefined) {
+                    index = Math.floor(Math.random()*52);
+                }
+
+                if(i < 11){
+                    deck[index] = `C${i}`;
+                }else if(i == 11) {
+                    deck[index] = "CJ";
+                }else if(i == 12) {
+                    deck[index] = "CQ";
+                }else if(i == 13) {
+                    deck[index] = "CK";
+                }else if(i == 14) {
+                    deck[index] = "CA";
+                }
+
+            }else if(j == 3) {
+                // Diamonds
+                index = Math.floor(Math.random()*52);
+
+                while(deck[index] != undefined) {
+                    index = Math.floor(Math.random()*52);
+                }
+
+                if(i < 11){
+                    deck[index] = `D${i}`;
+                }else if(i == 11) {
+                    deck[index] = "DJ";
+                }else if(i == 12) {
+                    deck[index] = "DQ";
+                }else if(i == 13) {
+                    deck[index] = "DK";
+                }else if(i == 14) {
+                    deck[index] = "DA";
+                }
+            }
+        }
+    }
+}
+
+makeDeck();
+
+function dealHand() {
+    let userIndex;
+    let dealerIndex;
+    for(let i=0; i<2; i++) {
+        userIndex = Math.floor(Math.random()*52);
+        do{
+            userIndex = Math.floor(Math.random()*52);
+        }while(deck[userIndex] == 0);
+        
+        do{
+            dealerIndex = Math.floor(Math.random()*52);
+        }while(deck[dealerIndex] == 0 || userIndex == dealerIndex);
+
+        userHand.push(deck[userIndex]);
+        dealerHand.push(deck[dealerIndex]);
+        deck[userIndex] = 0;
+        deck[dealerIndex] = 0;
+    }   
+}
+
+dealHand();
+
+function hitMe(hand) {
+    let index = Math.floor(Math.random()*52);
+    while(deck[index] == 0){
+        index = Math.floor(Math.random()*52);
+    }
+
+    hand.push(deck[index]);
+}
+
+hitMe(userHand);
+hitMe(dealerHand);
+hitMe(userHand);
+hitMe(dealerHand);
+console.log(userHand + "\n" + dealerHand);
+
+function checkHands() {
+    let userScoreArr = [];
+    let dealerScoreArr = [];
+    let userScore = 0;
+    let dealerScore = 0;
+
+    for(let i=0; i<userHand.length; i++) {
+        userScoreArr.push(userHand[i].slice(1));
+    }
+
+    for(let i=0; i<dealerHand.length; i++) {
+        dealerScoreArr.push(dealerHand[i].slice(1));
+    }
+
+    for(let i=0; i<userScoreArr.length; i++) {
+        if(userScoreArr[i] == "J" || userScoreArr[i] == "Q" || userScoreArr[i] == "K") {
+            userScoreArr[i] = 10;
+        }
+        if(userScoreArr[i] == "A") {
+            let ace = userScoreArr.splice(i,1);
+            userScoreArr.push(ace);
+        }
+    }
+
+    for(let i=0; i<dealerScoreArr.length; i++) {
+        if(dealerScoreArr[i] == "J" || dealerScoreArr[i] == "Q" || dealerScoreArr[i] == "K") {
+            dealerScoreArr[i] = 10;
+        }
+        if(dealerScoreArr[i] == "A") {
+            let ace = dealerScoreArr.splice(i,1);
+            dealerScoreArr.push(ace);
+        }
+    }
+
+    for(let i=0; i<userScoreArr.length; i++) {
+        if(userScoreArr[i] == "A" && userScore <= 10) {
+            userScore += 11;
+        }else if(userScoreArr[i] == "A" && userScore >10) {
+            userScore += 1;
+        }else {
+            userScore += parseInt(userScoreArr[i]);
+        }
+    }
+
+    for(let i=0; i<dealerScoreArr.length; i++) {
+        if(dealerScoreArr[i] == "A" && dealerScore <= 10) {
+            dealerScore += 11;
+        }else if(dealerScoreArr[i] == "A" && dealerScore >10) {
+            dealerScore += 1;
+        }else {
+            dealerScore += parseInt(dealerScoreArr[i]);
+        }
+    }
+
+    console.log(userScoreArr + "\n" + dealerScoreArr + "\n" + userScore + "\n" + dealerScore);
+}
+
+checkHands();
+
+// console.log(userHand + "\n" + dealerHand);
