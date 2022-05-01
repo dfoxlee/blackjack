@@ -1,5 +1,5 @@
-/* CSS RESET */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+/* CSS RESET
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 /* Box sizing rules */
 *,
@@ -66,8 +66,6 @@ select {
    scroll-behavior: auto;
   }
   
-
-  
   *,
   *::before,
   *::after {
@@ -78,103 +76,100 @@ select {
   }
 }
 
+/* BODY, FONT, AND CONTAINERS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;900&display=swap');
 
-/* BACKGROUND */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
-
 body {
-    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(./resources/blackjack-table.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: "Roboto", sans-serif;
-    position: relative;
+  background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("./resources/blackjack-table.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* HEADER SECTION */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+.container {
+  display: flex;
+  width: 100%;
+}
+
+/* HEADER
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 header {
-    padding: 10px;
-    color: white;
+  color: white;
+  padding: 15px 0 10px;
 }
 
 header h2 {
-    font-size: 2rem;
-    text-align: center;
+  text-align: center;
+  font-weight: 300;
 }
 
 header h1 {
-    font-size: 4rem;
-    text-align: center;
-    letter-spacing: 0.4rem;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 400;
 }
 
-/* NEW GAME BUTTON */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+/* NEW GAME BUTTON
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
-#newGame {
-    background-color: white;
-    border: none;
-    border-radius: 5px;
-    display: flex;
-    padding: 10px;
-    display: flex;
-    margin: auto;
-    width: 200px;
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.1s;
-}
-
-#newGame:hover {
-    cursor: pointer;
-    background-color: darkred;
-    color: gainsboro;
-    box-shadow: 0 0 10px 10px gainsboro;
-}
-
-#newGame:active {
-    box-shadow: 0 0 2px 2px gainsboro;
-}
-
-#newGame h2{
-    margin: auto;
-    font-size: 1.5rem;
-    font-weight: 400;
-}
-
-/* CARD CONTAINERS */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
-
-.dealer-card-container,
-.user-card-container {
+#newGameBtn {
+  margin: auto;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: darkred;
   display: flex;
-  margin: 20px auto;
   justify-content: center;
+  align-items: center;
+  transition: box-shadow 0.3s;
+}
+
+#newGameBtn h2 {
+  color: gainsboro;
+  font-weight: 400;
+}
+
+#newGameBtn:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px 5px gainsboro;
+}
+
+#newGameBtn:active {
+  box-shadow: none;
+}
+
+/* COMPUTER CARD CONTAINER
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+.card-container {
+  margin: auto;
+  height: 150px;
+  display: flex;
+  padding: 10px 0;
 }
 
 .card {
-  /* background-image: url("./resources/playing-card-back.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat; */
-  height: 150px;
-  width: 100px;
+  height: 120px;
+  width: 80px;
+  border-radius: 10px;
   background-color: white;
   position: relative;
-  border-radius: 10px;
-  margin: 0 10px;
 }
 
 .card-top {
   position: absolute;
   top: 2px;
-  left: 10px;
-  font-size: 1.75rem;
+  left: 8px;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 .card-suit {
-  width: 50px;
+  width: 20px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -184,113 +179,119 @@ header h1 {
 .card-bottom {
   position: absolute;
   bottom: 2px;
-  right: 10px;
-  font-size: 1.75rem;
+  right: 8px;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
-.spades,
-.clubs {
-  color: black;
-}
-
-.hearts,
-.diamonds {
+.H,
+.D {
   color: red;
 }
 
-/* Hit Button */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+.S,
+.C {
+  color: black;
+}
+
+/* HIT BUTTON
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 #hitBtn {
-  background-color: white;
-  border: none;
-  border-radius: 100px;
+  margin: auto;
+  height: 70px;
+  width: 70px;
+  border-radius: 50px;
+  background-color: darkgray;
   display: flex;
-  margin: auto;
-  width: 75px;
-  height: 75px;
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.1s;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow 0.3s;
 }
 
-#hitBtn:hover {
-  cursor: pointer;
-  background-color: darkred;
-  color: gainsboro;
-  box-shadow: 0 0 10px 10px gainsboro;
-}
-
-#hitBtn:active {
-  box-shadow: 0 0 2px 2px gainsboro;
-}
-
-
-#hitBtn h2{
-  margin: auto;
+#hitBtn h2 {
   font-size: 1.5rem;
   font-weight: 400;
 }
 
-/* CARD CONTAINERS */
-/* ///////////////////////////////////////////////////////////////////////////////////////////// */
-
-.bottom-container {
-  width: 100%;
-  max-width: 1000px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px auto;
+#hitBtn:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px 5px gainsboro;
 }
 
-.chips-wrapper {
+#hitBtn:active {
+  box-shadow: none;
+}
+
+/* HIT BUTTON
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+.lower-container {
+  padding: 20px 0;
+  margin: auto;
   display: flex;
+  width: 1000px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .chip {
-  width: 50px;
-  height: 50px;
-  border-radius: 100px;
-  font-size: 1rem;
+  width: 70px;
+  height: 70px;
+  border-radius: 70px;
+  color: darkgoldenrod;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px;
-  color: darkgoldenrod;
-  border: 0.2rem solid darkgoldenrod;
+  border: 0.1rem solid darkgoldenrod;
+  margin: 0 10px;
+  transition: box-shadow 0.3s;
+}
+
+.chip h2 {
+  font-weight: 400;
 }
 
 .chip:hover {
   cursor: pointer;
+  box-shadow: 0 0 5px 5px gainsboro;
 }
 
-#chip1 {
+.chip:active {
+  box-shadow: none;
+}
+
+#chip1,
+#chip500 {
   background-color: black;
 }
 
-#chip5 {
+#chip20 {
+  background-color: darkblue;
+}
+
+#chip10,
+#chip50 {
   background-color: darkred;
 }
 
-#chip10 {
-  background-color: white;
-}
-
-#chip20 {
-  background-color: green;
-}
-
-#chip50 {
-  background-color: orangered;
-}
-
+#chip5,
 #chip100 {
-  background-color: yellow;
+  background-color: gainsboro;
 }
 
-#chip500 {
-  background-color: blue;
+.game-score {
+  color: white;
 }
 
-.bottom-container h2 {
-  margin-right: 30px;
+.game-score h2 {
+  margin: 0 10px;
+  font-weight: 300;
+  width: max-content;
 }

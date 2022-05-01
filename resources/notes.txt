@@ -1,24 +1,3 @@
-let newGameBtn = document.getElementById("newGameBtn");
-let hitBtn = document.getElementById("hitBtn");
-
-let chip1 = document.getElementById("chip1");
-let chip5 = document.getElementById("chip5");
-let chip10 = document.getElementById("chip10");
-let chip20 = document.getElementById("chip20");
-let chip50 = document.getElementById("chip50");
-let chip100 = document.getElementById("chip100");
-let chip500 = document.getElementById("chip500");
-
-let betAmount = document.getElementById("betAmount");
-let currentBalance = document.getElementById("currentBalance");
-
-let computerCardContainer = document.getElementById("computerCardContainer");
-let userCardContainer = document.getElementById("userCardContainer");
-
-let deck = [];
-let userHand = [];
-let computerHand = [];
-
 function makeDeck() {
     deck = [];
     let index;
@@ -109,58 +88,88 @@ function makeDeck() {
     }
 }
 
-function createCard(cardId, parent) {
-    let newDiv = document.createElement("div");
-    let topH2 = document.createElement("h2");
-    let newImg = document.createElement("img");
-    let bottomH2 = document.createElement("h2");
-
-    newDiv.classList.add("card");
-    topH2.classList.add("cardId", "card-top");
-    newImg.classList.add("card-suit");
-    bottomH2.classList.add("cardId", "card-bottom");
-    
-    if(cardId == "H") {
-        newImg.src = "./resources/heart.png";
-    }else if(cardId == "S") {
-        newImg.src = "./resources/spade.jpg"
-    }else if(cardId == "D") {
-        newImg.src = "./resources/diamond.png"
-    }else if(cardId == "C") {
-        newImg.src = "./resources/club.jpg";
-    }
-
-    newDiv.appendChild(topH2);
-    newDiv.appendChild(newImg);
-    newDiv.appendChild(bottomH2);
-
-    parent.appendChild(newDiv);
-}
-
-function dealInitialRound() {
-    let index;
-
+function dealHand() {
+    let userIndex;
+    let dealerIndex;
     for(let i=0; i<2; i++) {
+        userIndex = Math.floor(Math.random()*52);
         do{
-            index = Math.floor(Math.random()*52);
-        }while(deck[index] == 0);
-
-        userHand.push(deck[index]);
-        deck[index] = 0;
-
+            userIndex = Math.floor(Math.random()*52);
+        }while(deck[userIndex] == 0);
+        
         do{
-            index = Math.floor(Math.random()*52);
-        }while(deck[index] == 0);
+            dealerIndex = Math.floor(Math.random()*52);
+        }while(deck[dealerIndex] == 0 || userIndex == dealerIndex);
 
-        dealerHand.push(deck[index]);
-        deck[index] = 0;
+        userHand.push(deck[userIndex]);
+        dealerHand.push(deck[dealerIndex]);
+        deck[userIndex] = 0;
+        deck[dealerIndex] = 0;
+    }   
+}
+
+function hitMe(hand) {
+    let index = Math.floor(Math.random()*52);
+    while(deck[index] == 0){
+        index = Math.floor(Math.random()*52);
     }
+
+    hand.push(deck[index]);
 }
 
-function newGame() {
-    betAmount.innerHTML = 0;
-    currentBalance.innerHTML = 1500;
-    makeDeck();
-}
+function checkHands() {
+    let userScoreArr = [];
+    let dealerScoreArr = [];
+    let userScore = 0;
+    let dealerScore = 0;
 
-newGameBtn.addEventListener("click", newGame);
+    for(let i=0; i<userHand.length; i++) {
+        userScoreArr.push(userHand[i].slice(1));
+    }
+
+    for(let i=0; i<dealerHand.length; i++) {
+        dealerScoreArr.push(dealerHand[i].slice(1));
+    }
+
+    for(let i=0; i<userScoreArr.length; i++) {
+        if(userScoreArr[i] == "J" || userScoreArr[i] == "Q" || userScoreArr[i] == "K") {
+            userScoreArr[i] = 10;
+        }
+        if(userScoreArr[i] == "A") {
+            let ace = userScoreArr.splice(i,1);
+            userScoreArr.push(ace);
+        }
+    }
+
+    for(let i=0; i<dealerScoreArr.length; i++) {
+        if(dealerScoreArr[i] == "J" || dealerScoreArr[i] == "Q" || dealerScoreArr[i] == "K") {
+            dealerScoreArr[i] = 10;
+        }
+        if(dealerScoreArr[i] == "A") {
+            let ace = dealerScoreArr.splice(i,1);
+            dealerScoreArr.push(ace);
+        }
+    }
+
+    for(let i=0; i<userScoreArr.length; i++) {
+        if(userScoreArr[i] == "A" && userScore <= 10) {
+            userScore += 11;
+        }else if(userScoreArr[i] == "A" && userScore >10) {
+            userScore += 1;
+        }else {
+            userScore += parseInt(userScoreArr[i]);
+        }
+    }
+
+    for(let i=0; i<dealerScoreArr.length; i++) {
+        if(dealerScoreArr[i] == "A" && dealerScore <= 10) {
+            dealerScore += 11;
+        }else if(dealerScoreArr[i] == "A" && dealerScore >10) {
+            dealerScore += 1;
+        }else {
+            dealerScore += parseInt(dealerScoreArr[i]);
+        }
+    }
+
+    console.log(userScoreArr + "\n" + dealerScoreArr + "\n" + userScore + "\n" + dealerScore);
+}
