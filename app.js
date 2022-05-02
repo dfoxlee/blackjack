@@ -152,10 +152,23 @@ function createCard(cardId, cardVal, parent) {
         let newImg = document.createElement("img");
         let bottomH2 = document.createElement("h2");
 
-        newDiv.classList.add("card");
-        topH2.classList.add(cardId, "card-top");
-        newImg.classList.add("card-suit");
-        bottomH2.classList.add(cardId, "card-bottom");
+        newDiv.classList.add("computer-card");
+        topH2.classList.add(cardId, "computer-card-top");
+        newImg.classList.add("computer-card-suit");
+        bottomH2.classList.add(cardId, "computer-card-bottom");
+
+        topH2.innerHTML = cardVal;
+        bottomH2.innerHTML = cardVal;
+        
+        if(cardId == "H") {
+            newImg.src = "./resources/heart.png";
+        }else if(cardId == "S") {
+            newImg.src = "./resources/spade.jpg"
+        }else if(cardId == "D") {
+            newImg.src = "./resources/diamond.png"
+        }else if(cardId == "C") {
+            newImg.src = "./resources/club.jpg";
+        }
 
         newDiv.appendChild(topH2);
         newDiv.appendChild(newImg);
@@ -237,6 +250,8 @@ function updateScoreHands() {
         }
     }
 
+    console.log(computerScore);
+
     if(userAceCount > 0) {
         for(let i=0; i<userAceCount; i++) {
             if(userScore < 11) {
@@ -256,6 +271,8 @@ function updateScoreHands() {
             }
         }
     }
+
+    console.log(computerScore);
 }
 
 function checkUserScore() {
@@ -288,14 +305,29 @@ function checkComputerScore() {
 
         resultsMessage.innerHTML = "Dealer Wins with Blackjack.";
         results.style.display = "flex";
-    }
-    if(computerScore > 21) {
+    }else if(computerScore > 21) {
         hitBtn.style.backgroundColor = "darkgray";
         stayBtn.style.backgroundColor = "darkgray";
         hitBtn.style.color = "black";
         stayBtn.style.color = "black";
 
         resultsMessage.innerHTML = "Dealer Busts. Player Wins.";
+        results.style.display = "flex";
+    }else if(computerScore >= userScore) {
+        hitBtn.style.backgroundColor = "darkgray";
+        stayBtn.style.backgroundColor = "darkgray";
+        hitBtn.style.color = "black";
+        stayBtn.style.color = "black";
+
+        resultsMessage.innerHTML = "Dealer Wins.";
+        results.style.display = "flex";
+    }else if(computerScore < userScore) {
+        hitBtn.style.backgroundColor = "darkgray";
+        stayBtn.style.backgroundColor = "darkgray";
+        hitBtn.style.color = "black";
+        stayBtn.style.color = "black";
+
+        resultsMessage.innerHTML = "Player Wins.";
         results.style.display = "flex";
     }
 }
@@ -348,3 +380,46 @@ function addUserCard() {
 }
 
 hitBtn.addEventListener("click", addUserCard);
+
+function updateComputerHand() {
+    let computerCardTop = document.getElementsByClassName("computer-card-top");
+    let computerCardSuit = document.getElementsByClassName("computer-card-suit");
+    let computerCardBottom = document.getElementsByClassName("computer-card-bottom");
+    let computerCard = document.getElementsByClassName("computer-card");
+
+    for(let i=0; i<computerCard.length; i++) {
+        computerCardTop[i].style.display = "block";
+        computerCardSuit[i].style.display = "block";
+        computerCardBottom[i].style.display = "block";
+    }
+
+    while(computerScore <= 16 || computerScore < userScore) {
+        let index;
+
+        do{
+            index = Math.floor(Math.random()*52);
+        }while(deck[index] == 0);
+
+        computerHand.push(deck[index]);
+        deck[index] = 0;
+
+        createCard(computerHand[(computerHand.length - 1)][0], computerHand[(userHand.length - 1)].slice(1), computerCardContainer);
+
+        computerCardTop = document.getElementsByClassName("computer-card-top");
+        computerCardSuit = document.getElementsByClassName("computer-card-suit");
+        computerCardBottom = document.getElementsByClassName("computer-card-bottom");
+        computerCard = document.getElementsByClassName("computer-card");
+
+        for(let i=0; i<computerCard.length; i++) {
+            computerCardTop[i].style.display = "block";
+            computerCardSuit[i].style.display = "block";
+            computerCardBottom[i].style.display = "block";
+        }
+
+        updateScoreHands();
+    }
+
+    checkComputerScore();
+}
+
+stayBtn.addEventListener("click", updateComputerHand);

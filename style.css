@@ -177,7 +177,8 @@ header h1 {
   padding: 10px 0;
 }
 
-.card {
+.card,
+.computer-card {
   height: 120px;
   width: 80px;
   border-radius: 10px;
@@ -186,7 +187,8 @@ header h1 {
   margin: 0 10px;
 }
 
-.card-top {
+.card-top,
+.computer-card-top {
   position: absolute;
   top: 2px;
   left: 8px;
@@ -194,7 +196,8 @@ header h1 {
   font-weight: 400;
 }
 
-.card-suit {
+.card-suit,
+.computer-card-suit {
   width: 20px;
   position: absolute;
   top: 50%;
@@ -202,12 +205,19 @@ header h1 {
   transform: translate(-50%, -50%);
 }
 
-.card-bottom {
+.card-bottom,
+.computer-card-bottom {
   position: absolute;
   bottom: 2px;
   right: 8px;
   font-size: 1.2rem;
   font-weight: 400;
+}
+
+.computer-card-top,
+.computer-card-suit,
+.computer-card-bottom {
+  display: none;
 }
 
 .H,
