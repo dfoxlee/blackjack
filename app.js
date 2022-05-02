@@ -1,5 +1,6 @@
 let newGameBtn = document.getElementById("newGameBtn");
 let hitBtn = document.getElementById("hitBtn");
+let stayBtn = document.getElementById("stayBtn");
 
 let chip1 = document.getElementById("chip1");
 let chip5 = document.getElementById("chip5");
@@ -15,6 +16,8 @@ let results = document.getElementById("results");
 
 let computerCardContainer = document.getElementById("computerCardContainer");
 let userCardContainer = document.getElementById("userCardContainer");
+
+let resultsMessage = document.getElementById("resultsMessage");
 
 let deck = [];
 let userHand = [];
@@ -192,6 +195,8 @@ function dealInitialRound() {
 function updateScoreHands() {
     let userCalcArr = [];
     let computerCalcArr = [];
+    userScore = 0;
+    computerScore = 0;
 
     for(let i=0; i<userHand.length; i++) {
         userCalcArr[i] = userHand[i].slice(1);
@@ -253,15 +258,58 @@ function updateScoreHands() {
     }
 }
 
-function checkScore() {
+function checkUserScore() {
+    if(userScore > 21) {
+        hitBtn.style.backgroundColor = "darkgray";
+        stayBtn.style.backgroundColor = "darkgray";
+        hitBtn.style.color = "black";
+        stayBtn.style.color = "black";
 
+        resultsMessage.innerHTML = "Player busts. Dealer wins.";
+        results.style.display = "flex";
+    }
+    if(userScore == 21) {
+        hitBtn.style.backgroundColor = "darkgray";
+        stayBtn.style.backgroundColor = "darkgray";
+        hitBtn.style.color = "black";
+        stayBtn.style.color = "black";
+
+        resultsMessage.innerHTML = "Player Wins with Blackjack.";
+        results.style.display = "flex";
+    }
+}
+
+function checkComputerScore() {
+    if(computerScore == 21) {
+        hitBtn.style.backgroundColor = "darkgray";
+        stayBtn.style.backgroundColor = "darkgray";
+        hitBtn.style.color = "black";
+        stayBtn.style.color = "black";
+
+        resultsMessage.innerHTML = "Dealer Wins with Blackjack.";
+        results.style.display = "flex";
+    }
+    if(computerScore > 21) {
+        hitBtn.style.backgroundColor = "darkgray";
+        stayBtn.style.backgroundColor = "darkgray";
+        hitBtn.style.color = "black";
+        stayBtn.style.color = "black";
+
+        resultsMessage.innerHTML = "Dealer Busts. Player Wins.";
+        results.style.display = "flex";
+    }
 }
 
 function newGame() {
+    results.style.display = "none";
     betAmount.innerHTML = 0;
     currentBalance.innerHTML = 1500;
     userScore = 0;
     computerScore = 0;
+    hitBtn.style.backgroundColor = "darkred";
+    stayBtn.style.backgroundColor = "darkred";
+    hitBtn.style.color = "gainsboro";
+    stayBtn.style.color = "gainsboro";
 
     let userCardLength = document.getElementById("userCardContainer").children.length;
     let computerCardLength = document.getElementById("computerCardContainer").children.length;
@@ -278,7 +326,25 @@ function newGame() {
     makeDeck();
     dealInitialRound();
     updateScoreHands();
-    checkScore();
+    checkUserScore();
 }
 
 newGameBtn.addEventListener("click", newGame);
+
+function addUserCard() {
+    let index;
+
+    do{
+        index = Math.floor(Math.random()*52);
+    }while(deck[index] == 0);
+
+    userHand.push(deck[index]);
+    deck[index] = 0;
+
+    createCard(userHand[(userHand.length - 1)][0], userHand[(userHand.length - 1)].slice(1), userCardContainer);
+
+    updateScoreHands();
+    checkUserScore();
+}
+
+hitBtn.addEventListener("click", addUserCard);

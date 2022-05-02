@@ -156,7 +156,7 @@ header h1 {
   border: 2px solid red;
   border-radius: 10px;
   background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8));
-  display: flex;
+  /* display: flex; */
   display: none;
 }
 
@@ -220,10 +220,17 @@ header h1 {
   color: black;
 }
 
-/* HIT BUTTON
+/* HIT AND STAY BUTTON
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
-#hitBtn {
+.hit-stay-container {
+  display: flex;
+  margin: auto;
+  width: 60%;
+  max-width: 600px;
+}
+
+.hit-stay {
   margin: auto;
   height: 70px;
   width: 70px;
@@ -235,21 +242,22 @@ header h1 {
   transition: box-shadow 0.3s;
 }
 
-#hitBtn h2 {
+.hit-stay h2 {
   font-size: 1.5rem;
   font-weight: 400;
+  text-align: center;
 }
 
-#hitBtn:hover {
+.hit-stay:hover {
   cursor: pointer;
   box-shadow: 0 0 5px 5px gainsboro;
 }
 
-#hitBtn:active {
+.hit-stay:active {
   box-shadow: none;
 }
 
-/* HIT BUTTON
+/* LOWER BETTING CONTAINER
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 .lower-container {
