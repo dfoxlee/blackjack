@@ -1,29 +1,8 @@
-let newGameBtn = document.getElementById("newGameBtn");
-let hitBtn = document.getElementById("hitBtn");
-let stayBtn = document.getElementById("stayBtn");
-
-let chip1 = document.getElementById("chip1");
-let chip5 = document.getElementById("chip5");
-let chip10 = document.getElementById("chip10");
-let chip20 = document.getElementById("chip20");
-let chip50 = document.getElementById("chip50");
-let chip100 = document.getElementById("chip100");
-let chip500 = document.getElementById("chip500");
-
-let betAmount = document.getElementById("betAmount");
-let currentBalance = document.getElementById("currentBalance");
-let results = document.getElementById("results");
-
-let computerCardContainer = document.getElementById("computerCardContainer");
-let userCardContainer = document.getElementById("userCardContainer");
-
-let resultsMessage = document.getElementById("resultsMessage");
-
-let deck = [];
+let deck;
 let userHand = [];
-let computerHand = [];
+let dealerHand = [];
 let userScore = 0;
-let computerScore = 0;
+let dealerScore;
 
 function makeDeck() {
     deck = [];
@@ -40,15 +19,15 @@ function makeDeck() {
                 }
 
                 if(i < 11){
-                    deck[index] = `S${i}`;
+                    deck[index] = [i, "S"];
                 }else if(i == 11) {
-                    deck[index] = "SJ";
+                    deck[index] = ["J", "S"];
                 }else if(i == 12) {
-                    deck[index] = "SQ";
+                    deck[index] = ["Q", "S"];
                 }else if(i == 13) {
-                    deck[index] = "SK";
+                    deck[index] = ["K", "S"];
                 }else if(i == 14) {
-                    deck[index] = "SA";
+                    deck[index] = ["A", "S"];
                 }
 
             }else if(j ==1) {
@@ -60,15 +39,15 @@ function makeDeck() {
                 }
 
                 if(i < 11){
-                    deck[index] = `H${i}`;
+                    deck[index] = [i, "H"];
                 }else if(i == 11) {
-                    deck[index] = "HJ";
+                    deck[index] = ["J", "H"];
                 }else if(i == 12) {
-                    deck[index] = "HQ";
+                    deck[index] = ["Q", "H"];
                 }else if(i == 13) {
-                    deck[index] = "HK";
+                    deck[index] = ["K", "H"];
                 }else if(i == 14) {
-                    deck[index] = "HA";
+                    deck[index] = ["A", "H"];
                 }
 
             }else if(j == 2) {
@@ -80,15 +59,15 @@ function makeDeck() {
                 }
 
                 if(i < 11){
-                    deck[index] = `C${i}`;
+                    deck[index] = [i, "C"];
                 }else if(i == 11) {
-                    deck[index] = "CJ";
+                    deck[index] = ["J", "C"];
                 }else if(i == 12) {
-                    deck[index] = "CQ";
+                    deck[index] = ["Q", "C"];
                 }else if(i == 13) {
-                    deck[index] = "CK";
+                    deck[index] = ["K", "C"];
                 }else if(i == 14) {
-                    deck[index] = "CA";
+                    deck[index] = ["A", "C"];
                 }
 
             }else if(j == 3) {
@@ -100,268 +79,71 @@ function makeDeck() {
                 }
 
                 if(i < 11){
-                    deck[index] = `D${i}`;
+                    deck[index] = [i, "D"];
                 }else if(i == 11) {
-                    deck[index] = "DJ";
+                    deck[index] = ["J", "D"];
                 }else if(i == 12) {
-                    deck[index] = "DQ";
+                    deck[index] = ["Q", "D"];
                 }else if(i == 13) {
-                    deck[index] = "DK";
+                    deck[index] = ["K", "D"];
                 }else if(i == 14) {
-                    deck[index] = "DA";
+                    deck[index] = ["A", "D"];
                 }
             }
         }
     }
 }
 
-function createCard(cardId, cardVal, parent) {
-    if(parent == userCardContainer)
-    {
-        let newDiv = document.createElement("div");
-        let topH2 = document.createElement("h2");
-        let newImg = document.createElement("img");
-        let bottomH2 = document.createElement("h2");
-
-        newDiv.classList.add("card");
-        topH2.classList.add(cardId, "card-top");
-        newImg.classList.add("card-suit");
-        bottomH2.classList.add(cardId, "card-bottom");
-
-        topH2.innerHTML = cardVal;
-        bottomH2.innerHTML = cardVal;
-        
-        if(cardId == "H") {
-            newImg.src = "./resources/heart.png";
-        }else if(cardId == "S") {
-            newImg.src = "./resources/spade.jpg"
-        }else if(cardId == "D") {
-            newImg.src = "./resources/diamond.png"
-        }else if(cardId == "C") {
-            newImg.src = "./resources/club.jpg";
-        }
-
-        newDiv.appendChild(topH2);
-        newDiv.appendChild(newImg);
-        newDiv.appendChild(bottomH2);
-
-        parent.appendChild(newDiv);
-    }else {
-        let newDiv = document.createElement("div");
-        let topH2 = document.createElement("h2");
-        let newImg = document.createElement("img");
-        let bottomH2 = document.createElement("h2");
-
-        newDiv.classList.add("computer-card");
-        topH2.classList.add(cardId, "computer-card-top");
-        newImg.classList.add("computer-card-suit");
-        bottomH2.classList.add(cardId, "computer-card-bottom");
-
-        topH2.innerHTML = cardVal;
-        bottomH2.innerHTML = cardVal;
-        
-        if(cardId == "H") {
-            newImg.src = "./resources/heart.png";
-        }else if(cardId == "S") {
-            newImg.src = "./resources/spade.jpg"
-        }else if(cardId == "D") {
-            newImg.src = "./resources/diamond.png"
-        }else if(cardId == "C") {
-            newImg.src = "./resources/club.jpg";
-        }
-
-        newDiv.appendChild(topH2);
-        newDiv.appendChild(newImg);
-        newDiv.appendChild(bottomH2);
-
-        parent.appendChild(newDiv);
-    }
-}
-
-function dealInitialRound() {
+function dealFirstCards() {
     let index;
-    userHand = [];
-    computerHand = [];
-
     for(let i=0; i<2; i++) {
         do{
             index = Math.floor(Math.random()*52);
         }while(deck[index] == 0);
 
-        userHand.push(deck[index]);
-        deck[index] = 0;
-
-        do{
-            index = Math.floor(Math.random()*52);
-        }while(deck[index] == 0);
-
-        computerHand.push(deck[index]);
+        userHand[i] = deck[index];
         deck[index] = 0;
     }
 
     for(let i=0; i<2; i++) {
-        createCard(computerHand[i][0], computerHand[i].slice(1), computerCardContainer);
-        createCard(userHand[i][0], userHand[i].slice(1), userCardContainer);
+        do{
+            index = Math.floor(Math.random()*52);
+        }while(deck[index] == 0);
+
+        dealerHand[i] = deck[index];
+        deck[index] = 0;
     }
 }
 
-function updateScoreHands() {
-    let userCalcArr = [];
-    let computerCalcArr = [];
+function checkUserHand() {
     userScore = 0;
-    computerScore = 0;
+    let tempArr = [];
+    let aceIndex = 0;
 
     for(let i=0; i<userHand.length; i++) {
-        userCalcArr[i] = userHand[i].slice(1);
-    }
-
-    for(let i=0; i<computerHand.length; i++) {
-        computerCalcArr[i] = computerHand[i].slice(1);
-    }
-
-    let userAceCount = 0;
-    let computerAceCount = 0;
-
-    for(let i=0; i<userCalcArr.length; i++) {
-        if(userCalcArr[i] == "J" || userCalcArr[i] == "Q" || userCalcArr[i] == "K") {
-            userCalcArr[i] = "10";
-        }else if(userCalcArr[i] == "A") {
-            userAceCount += 1;
+        if(userHand[i][0] == "J" || userHand[i][0] == "Q" || userHand[i][0] == "K") {
+            tempArr.push(10);
+        }else if(userHand[i][0] == "A") {
+            aceIndex += 1;
+        }else {
+            tempArr.push(parseInt(userHand[i][0]));
         }
     }
 
-    for(let i=0; i<computerCalcArr.length; i++) {
-        if(computerCalcArr[i] == "J" || computerCalcArr[i] == "Q" || computerCalcArr[i] == "K") {
-            computerCalcArr[i] = "10";
-        }else if(computerCalcArr[i] == "A") {
-            computerAceCount += 1;
-        }
+    for(let i=0; i<tempArr.length; i++) {
+        userScore += tempArr[i];
     }
 
-    for(let i=0; i<userCalcArr.length; i++) {
-        if(userCalcArr[i] != "A") {
-            userScore += parseInt(userCalcArr[i]);
-        }
-    }
-
-    for(let i=0; i<computerCalcArr.length; i++) {
-        if(computerCalcArr[i] != "A") {
-            computerScore += parseInt(computerCalcArr[i]);
-        }
-    }
-
-    console.log(computerScore);
-
-    if(userAceCount > 0) {
-        for(let i=0; i<userAceCount; i++) {
+    if(aceIndex > 0) {
+        for(let i=0; i<aceIndex; i++) {
             if(userScore < 11) {
                 userScore += 11;
-            }else {
+            }else{
                 userScore += 1;
             }
         }
     }
-
-    if(computerAceCount > 0) {
-        for(let i=0; i<computerAceCount; i++) {
-            if(computerScore < 11) {
-                computerScore += 11;
-            }else {
-                computerScore += 1;
-            }
-        }
-    }
-
-    console.log(computerScore);
 }
-
-function checkUserScore() {
-    if(userScore > 21) {
-        hitBtn.style.backgroundColor = "darkgray";
-        stayBtn.style.backgroundColor = "darkgray";
-        hitBtn.style.color = "black";
-        stayBtn.style.color = "black";
-
-        resultsMessage.innerHTML = "Player busts. Dealer wins.";
-        results.style.display = "flex";
-    }
-    if(userScore == 21) {
-        hitBtn.style.backgroundColor = "darkgray";
-        stayBtn.style.backgroundColor = "darkgray";
-        hitBtn.style.color = "black";
-        stayBtn.style.color = "black";
-
-        resultsMessage.innerHTML = "Player Wins with Blackjack.";
-        results.style.display = "flex";
-    }
-}
-
-function checkComputerScore() {
-    if(computerScore == 21) {
-        hitBtn.style.backgroundColor = "darkgray";
-        stayBtn.style.backgroundColor = "darkgray";
-        hitBtn.style.color = "black";
-        stayBtn.style.color = "black";
-
-        resultsMessage.innerHTML = "Dealer Wins with Blackjack.";
-        results.style.display = "flex";
-    }else if(computerScore > 21) {
-        hitBtn.style.backgroundColor = "darkgray";
-        stayBtn.style.backgroundColor = "darkgray";
-        hitBtn.style.color = "black";
-        stayBtn.style.color = "black";
-
-        resultsMessage.innerHTML = "Dealer Busts. Player Wins.";
-        results.style.display = "flex";
-    }else if(computerScore >= userScore) {
-        hitBtn.style.backgroundColor = "darkgray";
-        stayBtn.style.backgroundColor = "darkgray";
-        hitBtn.style.color = "black";
-        stayBtn.style.color = "black";
-
-        resultsMessage.innerHTML = "Dealer Wins.";
-        results.style.display = "flex";
-    }else if(computerScore < userScore) {
-        hitBtn.style.backgroundColor = "darkgray";
-        stayBtn.style.backgroundColor = "darkgray";
-        hitBtn.style.color = "black";
-        stayBtn.style.color = "black";
-
-        resultsMessage.innerHTML = "Player Wins.";
-        results.style.display = "flex";
-    }
-}
-
-function newGame() {
-    results.style.display = "none";
-    betAmount.innerHTML = 0;
-    currentBalance.innerHTML = 1500;
-    userScore = 0;
-    computerScore = 0;
-    hitBtn.style.backgroundColor = "darkred";
-    stayBtn.style.backgroundColor = "darkred";
-    hitBtn.style.color = "gainsboro";
-    stayBtn.style.color = "gainsboro";
-
-    let userCardLength = document.getElementById("userCardContainer").children.length;
-    let computerCardLength = document.getElementById("computerCardContainer").children.length;
-    if(userCardLength > 0 || userCardLength > 0) {
-        for(let i=0; i<userCardLength; i++) {
-            userCardContainer.removeChild(userCardContainer.firstElementChild);
-        }
-    
-        for(let i=0; i<computerCardLength; i++) {
-            computerCardContainer.removeChild(computerCardContainer.firstElementChild);
-        }
-    }
-
-    makeDeck();
-    dealInitialRound();
-    updateScoreHands();
-    checkUserScore();
-}
-
-newGameBtn.addEventListener("click", newGame);
 
 function addUserCard() {
     let index;
@@ -372,54 +154,45 @@ function addUserCard() {
 
     userHand.push(deck[index]);
     deck[index] = 0;
-
-    createCard(userHand[(userHand.length - 1)][0], userHand[(userHand.length - 1)].slice(1), userCardContainer);
-
-    updateScoreHands();
-    checkUserScore();
 }
 
-hitBtn.addEventListener("click", addUserCard);
+function checkDealerHand() {
+    dealerScore = 0;
+    let tempArr = [];
+    let aceIndex = 0;
 
-function updateComputerHand() {
-    let computerCardTop = document.getElementsByClassName("computer-card-top");
-    let computerCardSuit = document.getElementsByClassName("computer-card-suit");
-    let computerCardBottom = document.getElementsByClassName("computer-card-bottom");
-    let computerCard = document.getElementsByClassName("computer-card");
-
-    for(let i=0; i<computerCard.length; i++) {
-        computerCardTop[i].style.display = "block";
-        computerCardSuit[i].style.display = "block";
-        computerCardBottom[i].style.display = "block";
-    }
-
-    while(computerScore <= 16 || computerScore < userScore) {
-        let index;
-
-        do{
-            index = Math.floor(Math.random()*52);
-        }while(deck[index] == 0);
-
-        computerHand.push(deck[index]);
-        deck[index] = 0;
-
-        createCard(computerHand[(computerHand.length - 1)][0], computerHand[(userHand.length - 1)].slice(1), computerCardContainer);
-
-        computerCardTop = document.getElementsByClassName("computer-card-top");
-        computerCardSuit = document.getElementsByClassName("computer-card-suit");
-        computerCardBottom = document.getElementsByClassName("computer-card-bottom");
-        computerCard = document.getElementsByClassName("computer-card");
-
-        for(let i=0; i<computerCard.length; i++) {
-            computerCardTop[i].style.display = "block";
-            computerCardSuit[i].style.display = "block";
-            computerCardBottom[i].style.display = "block";
+    for(let i=0; i<dealerHand.length; i++) {
+        if(dealerHand[i][0] == "J" || dealerHand[i][0] == "Q" || dealerHand[i][0] == "K") {
+            tempArr.push(10);
+        }else if(dealerHand[i][0] == "A") {
+            aceIndex += 1;
+        }else {
+            tempArr.push(parseInt(dealerHand[i][0]));
         }
-
-        updateScoreHands();
     }
 
-    checkComputerScore();
+    for(let i=0; i<tempArr.length; i++) {
+        dealerScore += tempArr[i];
+    }
+
+    if(aceIndex > 0) {
+        for(let i=0; i<aceIndex; i++) {
+            if(dealerScore < 11) {
+                dealerScore += 11;
+            }else{
+                dealerScore += 1;
+            }
+        }
+    }
 }
 
-stayBtn.addEventListener("click", updateComputerHand);
+function addDealerCard() {
+    let index;
+
+    do{
+        index = Math.floor(Math.random()*52);
+    }while(deck[index] == 0);
+
+    dealerHand.push(deck[index]);
+    deck[index] = 0;
+}

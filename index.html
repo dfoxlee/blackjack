@@ -1,94 +1,81 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Dave's Blackjack</title>
-        <meta name="description" content="Blackjack game">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./style.css">
-    </head>
-    <body>
-        <header>
-            <h2>Welcome to</h2>
-            <h1>Dave's Blackjack</h1>
-        </header>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Dave's Blackjack</title>
+</head>
+<body>
+    <header>
+        <h2>Welcome To</h2>
+        <h1>Dave's Blackjack</h1>
+    </header>
 
-        <section class="container new-game-container">
-            <div id="newGameBtn">
-                <h2>New Game</h2>
-            </div>
-        </section>
-        <div id="results">
-            <h2 id="resultsMessage">Dealer Busts. User Wins</h2>
-        </div>
-
+    <main>
         <section class="container">
-            <div id="computerCardContainer" class="card-container">
-                <!-- <div class="card">
-                    <h2 class="card-top">A</h2>
-                    <img class="card-suit" src="./resources/club.jpg">
-                    <h2 class="card-bottom">A</h2>
-                </div> -->
-                <!-- <img class="card-suit" src="./resources/club.jpg">
-                <img class="card-suit" src="./resources/spade.jpg">
-                <img class="card-suit" src="./resources/heart.png">
-                <img class="card-suit" src="./resources/diamond.png"> -->
+            <div id="dealBtn" class="deal-btn">
+                <span>DEAL</span>
             </div>
         </section>
 
         <section class="container">
-            <div id="userCardContainer" class="card-container"></div>
-        </section>
-
-        <section class="container">
-            <div class="hit-stay-container">
-                <div id="hitBtn" class="hit-stay">
-                    <h2>HIT</h2>
-                </div>
-                <div id="stayBtn" class="hit-stay">
-                    <h2>STAY</h2>
-                </div>
-            </div>
-        </section>
-
-        <section class="container">
-            <div class="lower-container">
-                <div class="chip-container">
-                    <div id="chip1" class="chip">
-                        <h2>$1</h2>
-                    </div>
-                    <div id="chip5" class="chip">
-                        <h2>$5</h2>
-                    </div>
-                    <div id="chip10" class="chip">
-                        <h2>$10</h2>
-                    </div>
-                    <div id="chip20" class="chip">
-                        <h2>$20</h2>
-                    </div>
-                    <div id="chip50" class="chip">
-                        <h2>$50</h2>
-                    </div>
-                    <div id="chip100" class="chip">
-                        <h2>$100</h2>
-                    </div>
-                    <div id="chip500" class="chip">
-                        <h2>$500</h2>
-                    </div>
-                </div>
-
-                <div class="game-score">
-                    <h2>Bet: $<span id="betAmount">0</span></h2>
-                    <h2>Bank: $<span id="currentBalance">1500</span></h2>
-                </div>
+            <div class="dealer-card-wrapper">
+                <div class="dealer-card"></div>
+                <div class="dealer-card"></div>
             </div>
         </section>
         
-        <script src="./app.js" async defer></script>
-    </body>
+        <section class="container">
+            <div class="user-card-wrapper">
+                <div class="user-card"></div>
+                <div class="user-card"></div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="hit-stay-wrapper">
+                <div class="hit-btn">
+                    <span>HIT</span>
+                </div>
+                <div class="stay-btn">
+                    <span>STAY</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="betting-balance-wrapper">
+                <div class="betting-wrapper">
+                    <div id="chip1" class="chip">
+                        <span>$1</span>
+                    </div>
+                    <div id="chip5" class="chip">
+                        <span>$5</span>
+                    </div>
+                    <div id="chip10" class="chip">
+                        <span>$10</span>
+                    </div>
+                    <div id="chip50" class="chip">
+                        <span>$50</span>
+                    </div>
+                    <div id="chip100" class="chip">
+                        <span>$100</span>
+                    </div>
+                    <div id="chip500" class="chip">
+                        <span>$500</span>
+                    </div>
+                </div>
+
+                <div class="balance-wrapper">
+                    <span>Bet Amount: $<span>0</span></span>
+                    <br>
+                    <span>Bank Balance: $<span>1500</span></span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="./app.js"></script>
+</body>
 </html>
