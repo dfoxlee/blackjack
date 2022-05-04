@@ -3,6 +3,18 @@ let userHand = [];
 let dealerHand = [];
 let userScore = 0;
 let dealerScore;
+let roundStart = false;
+
+let dealBtn = document.getElementById("dealBtn");
+let betAmount = document.getElementById("betAmount");
+let bankBalance = document.getElementById("bankBalance");
+
+let chip1 = document.getElementById("chip1");
+let chip5 = document.getElementById("chip5");
+let chip10 = document.getElementById("chip10");
+let chip50 = document.getElementById("chip50");
+let chip100 = document.getElementById("chip100");
+let chip500 = document.getElementById("chip500");
 
 function makeDeck() {
     deck = [];
@@ -196,3 +208,117 @@ function addDealerCard() {
     dealerHand.push(deck[index]);
     deck[index] = 0;
 }
+
+function acceptBet(ele) {
+    if(roundStart == false) {
+        let currentBet = parseInt(betAmount.innerHTML);
+        let currentBankBalance = parseInt(bankBalance.innerHTML);
+
+        if((currentBankBalance - parseInt(ele.target.innerText.slice(1))) >= 0) {
+            currentBet += parseInt(ele.target.innerText.slice(1));
+            currentBankBalance -= parseInt(ele.target.innerText.slice(1));
+            betAmount.innerHTML = currentBet;
+            bankBalance.innerHTML = currentBankBalance;
+        }
+    }else {
+        return;
+    }
+}
+
+function dealInitialCards() {
+    let currentBet = parseInt(betAmount.innerHTML);
+    if(currentBet == 0) {
+        alert("Please place a bet before the deal.");
+        return;
+    }
+
+    if(roundStart == false) {
+        roundStart = true;
+        makeDeck();
+        dealFirstCards();
+        checkUserHand();
+
+        let dealerCards = document.getElementsByClassName("dealer-card");
+        let userCards = document.getElementsByClassName("user-card");
+
+        dealerCards[1].style.background = "none";
+        dealerCards[1].style.backgroundColor = "white";
+
+        let dealerTopSuit = document.createElement("span");
+        let dealerSuit = document.createElement("img")
+        let dealerBottomSuit = document.createElement("span");
+
+        dealerTopSuit.classList.add("top-suit", dealerHand[1][1]);
+        dealerTopSuit.innerHTML = dealerHand[1][0];
+        switch(dealerHand[1][1]) {
+            case "H":
+                dealerSuit.src = "./resources/heart.png";
+                dealerSuit.classList.add("suit");
+                break;
+            case "D":
+                dealerSuit.src = "./resources/diamond.png";
+                dealerSuit.classList.add("suit");
+                break;
+            case "S":
+                dealerSuit.src = "./resources/spade.jpg";
+                dealerSuit.classList.add("suit");
+                break;
+            case "C":
+                dealerSuit.src = "./resources/club.jpg";
+                dealerSuit.classList.add("suit");
+                break;
+        }
+        dealerBottomSuit.classList.add("bottom-suit", dealerHand[1][1]);
+        dealerBottomSuit.innerHTML = dealerHand[1][0];
+
+        dealerCards[1].appendChild(dealerTopSuit);
+        dealerCards[1].appendChild(dealerSuit);
+        dealerCards[1].appendChild(dealerBottomSuit);
+
+        
+
+        for(let i=0; i<2; i++) {
+            userCards[i].style.background = "none";
+            userCards[i].style.backgroundColor = "white";
+
+            let userTopSuit = document.createElement("span");
+            let userSuit = document.createElement("img")
+            let userBottomSuit = document.createElement("span");
+
+            userTopSuit.classList.add("top-suit", userHand[i][1]);
+            userTopSuit.innerHTML = userHand[i][0];
+            switch(userHand[i][1]) {
+                case "H":
+                    userSuit.src = "./resources/heart.png";
+                    userSuit.classList.add("suit");
+                    break;
+                case "D":
+                    userSuit.src = "./resources/diamond.png";
+                    userSuit.classList.add("suit");
+                    break;
+                case "S":
+                    userSuit.src = "./resources/spade.jpg";
+                    userSuit.classList.add("suit");
+                    break;
+                case "C":
+                    userSuit.src = "./resources/club.jpg";
+                    userSuit.classList.add("suit");
+                    break;
+            }
+            userBottomSuit.classList.add("bottom-suit", userHand[i][1]);
+            userBottomSuit.innerHTML = userHand[i][0];
+
+            userCards[i].appendChild(userTopSuit);
+            userCards[i].appendChild(userSuit);
+            userCards[i].appendChild(userBottomSuit);
+        }
+    }
+}
+
+dealBtn.addEventListener("click", dealInitialCards);
+chip1.addEventListener("click",acceptBet);
+chip5.addEventListener("click",acceptBet);
+chip10.addEventListener("click",acceptBet);
+chip50.addEventListener("click",acceptBet);
+chip100.addEventListener("click",acceptBet);
+chip500.addEventListener("click",acceptBet);

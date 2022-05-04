@@ -97,6 +97,7 @@ header {
 header h1,
 header h2 {
   color: gainsboro;
+  text-align: center;
 }
 
 header h2 {
@@ -118,6 +119,20 @@ header h1 {
 /* DEAL BUTTON */
 /* //////////////////////////////////////////////////////////////////////////////////////// */
 
+.new-game-deal-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 500px;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 450px) {
+  .new-game-deal-wrapper {
+    justify-content: center;
+  }
+}
+
 .deal-btn {
   display: flex;
   justify-content: center;
@@ -130,7 +145,24 @@ header h1 {
   transition: box-shadow 0.2s;
 }
 
+.new-game-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  background-color: darkblue;
+  color: gainsboro;
+  border-radius: 10px;
+  transition: box-shadow 0.2s;
+}
+
 .deal-btn:hover {
+  cursor:pointer;
+  box-shadow: 0 0 5px 5px gainsboro;
+}
+
+.new-game-btn:hover {
   cursor:pointer;
   box-shadow: 0 0 5px 5px gainsboro;
 }
@@ -139,7 +171,12 @@ header h1 {
   box-shadow: none;
 }
 
-.deal-btn span {
+.new-game-btn:active {
+  box-shadow: none;
+}
+
+.deal-btn span,
+.new-game-btn span {
   padding-top: 3px;
   font-size: 1.75rem;
   text-align: center;
@@ -165,10 +202,34 @@ header h1 {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 135px;
+  height: 140px;
   width: 100px;
-  border-radius: 8px;
+  border-radius: 5px;
   margin: 0 5px;
+  position: relative;
+}
+
+.suit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+}
+
+.top-suit {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 1;
+  font-size: 1.25rem;
+}
+
+.bottom-suit {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 1.25rem;
 }
 
 /* HIT AND STAY BUTTONS */
@@ -213,8 +274,8 @@ header h1 {
 
 .betting-balance-wrapper {
   display: flex;
-  width: 80%;
-  padding: 20px;
+  width: 90%;
+  padding: 10px;
   justify-content: space-between;
   align-items: center;
 }
@@ -288,4 +349,5 @@ border: 2px solid goldenrod;
   font-size: 1.5rem;
   color: gainsboro;
   letter-spacing: 0.125rem;
+  width: max-content;
 }
