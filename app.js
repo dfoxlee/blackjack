@@ -5,9 +5,16 @@ let userScore = 0;
 let dealerScore;
 let roundStart = false;
 
+let newGameBtn = document.getElementById("newGameBtn");
 let dealBtn = document.getElementById("dealBtn");
 let betAmount = document.getElementById("betAmount");
 let bankBalance = document.getElementById("bankBalance");
+let hitBtn = document.getElementById("hitBtn");
+let stayBtn = document.getElementById("stayBtn");
+let userCardWrapper = document.getElementById("userCardWrapper");
+let dealerCardWrapper = document.getElementById("dealerCardWrapper");
+let gameMessage = document.getElementById("gameMessage");
+let gameMessageWrapper = document.getElementById("gameMessageWrapper");
 
 let chip1 = document.getElementById("chip1");
 let chip5 = document.getElementById("chip5");
@@ -127,7 +134,7 @@ function dealFirstCards() {
     }
 }
 
-function checkUserHand() {
+function updateUserScore() {
     userScore = 0;
     let tempArr = [];
     let aceIndex = 0;
@@ -168,7 +175,7 @@ function addUserCard() {
     deck[index] = 0;
 }
 
-function checkDealerHand() {
+function updateDealerScore() {
     dealerScore = 0;
     let tempArr = [];
     let aceIndex = 0;
@@ -226,6 +233,8 @@ function acceptBet(ele) {
 }
 
 function dealInitialCards() {
+    gameMessageWrapper.style.display = "none";
+
     let currentBet = parseInt(betAmount.innerHTML);
     if(currentBet == 0) {
         alert("Please place a bet before the deal.");
@@ -235,8 +244,14 @@ function dealInitialCards() {
     if(roundStart == false) {
         roundStart = true;
         makeDeck();
+        clearHands();
+        userScore = 0;
+        dealerScore = 0;
+        userHand = [];
+        dealerHand = [];
         dealFirstCards();
-        checkUserHand();
+        updateUserScore();
+        updateDealerScore();
 
         let dealerCards = document.getElementsByClassName("dealer-card");
         let userCards = document.getElementsByClassName("user-card");
@@ -308,13 +323,242 @@ function dealInitialCards() {
             userBottomSuit.classList.add("bottom-suit", userHand[i][1]);
             userBottomSuit.innerHTML = userHand[i][0];
 
+            userCards[i].style.zIndex = "-1";
+
             userCards[i].appendChild(userTopSuit);
             userCards[i].appendChild(userSuit);
             userCards[i].appendChild(userBottomSuit);
         }
+
+        hitBtn.style.backgroundColor = "darkred";
+        stayBtn.style.backgroundColor = "darkred";
+        hitBtn.style.color = "gainsboro";
+        stayBtn.style.color = "gainsboro";
+
+        hitBtn.addEventListener("click", hitUserCard);
+        stayBtn.addEventListener("click", updateDealerHand);
     }
 }
 
+function hitUserCard() {
+    addUserCard();
+    updateUserScore();
+    let userCardsIndex = (userHand.length - 1);
+
+    let userCard = document.createElement("div");
+    let userTopSuit = document.createElement("span");
+    let userSuit = document.createElement("img")
+    let userBottomSuit = document.createElement("span");
+
+    userCard.classList.add("user-card");
+    userCard.style.background = "none";
+    userCard.style.backgroundColor = "white";
+    userCard.style.zIndex = "-1";
+    userTopSuit.classList.add("top-suit", userHand[userCardsIndex][1]);
+    userTopSuit.innerHTML = userHand[userCardsIndex][0];
+    switch(userHand[userCardsIndex][1]) {
+        case "H":
+            userSuit.src = "./resources/heart.png";
+            userSuit.classList.add("suit");
+            break;
+        case "D":
+            userSuit.src = "./resources/diamond.png";
+            userSuit.classList.add("suit");
+            break;
+        case "S":
+            userSuit.src = "./resources/spade.jpg";
+            userSuit.classList.add("suit");
+            break;
+        case "C":
+            userSuit.src = "./resources/club.jpg";
+            userSuit.classList.add("suit");
+            break;
+    }
+    userBottomSuit.classList.add("bottom-suit", userHand[userCardsIndex][1]);
+    userBottomSuit.innerHTML = userHand[userCardsIndex][0];
+
+    userCard.appendChild(userTopSuit);
+    userCard.appendChild(userSuit);
+    userCard.appendChild(userBottomSuit);
+
+    userCardWrapper.appendChild(userCard);
+
+    if(userScore == 21) {
+        userWins();
+    }else if(userScore > 21) {
+        userLoses();
+    }
+}
+
+function updateDealerHand() {
+    updateDealerScore();
+
+    let dealerCards = document.getElementsByClassName("dealer-card");
+
+    dealerCards[0].style.background = "none";
+    dealerCards[0].style.backgroundColor = "white";
+
+    let newDealerCardTop = document.createElement("span");
+    let newDealerCardSuit = document.createElement("img");
+    let newDealerCardBottom = document.createElement("span");
+
+    newDealerCardTop.classList.add("top-suit", dealerHand[0][1]);
+    newDealerCardBottom.classList.add("bottom-suit", dealerHand[0][1]);
+    newDealerCardTop.innerText = dealerHand[0][0];
+    newDealerCardBottom.innerText = dealerHand[0][0];
+
+    switch(dealerHand[0][1]) {
+        case "H":
+            newDealerCardSuit.src = "./resources/heart.png";
+            newDealerCardSuit.classList.add("suit");
+            break;
+        case "D":
+            newDealerCardSuit.src = "./resources/diamond.png";
+            newDealerCardSuit.classList.add("suit");
+            break;
+        case "S":
+            newDealerCardSuit.src = "./resources/spade.jpg";
+            newDealerCardSuit.classList.add("suit");
+            break;
+        case "C":
+            newDealerCardSuit.src = "./resources/club.jpg";
+            newDealerCardSuit.classList.add("suit");
+            break;
+    }
+    dealerCards[0].appendChild(newDealerCardTop);
+    dealerCards[0].appendChild(newDealerCardSuit);
+    dealerCards[0].appendChild(newDealerCardBottom);
+
+    while(dealerScore < 17) {
+        addDealerCard();
+        updateDealerScore();
+    }
+
+    if(dealerHand.length > 2) {
+        for(let i=2; i<dealerHand.length; i++) {
+            let newDealerCardDiv = document.createElement("div");
+            newDealerCardTop = document.createElement("span");
+            newDealerCardSuit = document.createElement("img");
+            newDealerCardBottom = document.createElement("span");
+
+            newDealerCardDiv.classList.add("dealer-card");
+            newDealerCardTop.classList.add("top-suit", dealerHand[i][1]);
+            newDealerCardBottom.classList.add("bottom-suit", dealerHand[i][1]);
+            newDealerCardTop.innerText = dealerHand[i][0];
+            newDealerCardBottom.innerText = dealerHand[i][0];
+
+            newDealerCardDiv.style.background = "none";
+            newDealerCardDiv.style.backgroundColor = "white";
+
+            switch(dealerHand[i][1]) {
+                case "H":
+                    newDealerCardSuit.src = "./resources/heart.png";
+                    newDealerCardSuit.classList.add("suit");
+                    break;
+                case "D":
+                    newDealerCardSuit.src = "./resources/diamond.png";
+                    newDealerCardSuit.classList.add("suit");
+                    break;
+                case "S":
+                    newDealerCardSuit.src = "./resources/spade.jpg";
+                    newDealerCardSuit.classList.add("suit");
+                    break;
+                case "C":
+                    newDealerCardSuit.src = "./resources/club.jpg";
+                    newDealerCardSuit.classList.add("suit");
+                    break;
+            }
+            newDealerCardDiv.appendChild(newDealerCardTop);
+            newDealerCardDiv.appendChild(newDealerCardSuit);
+            newDealerCardDiv.appendChild(newDealerCardBottom);
+
+            dealerCardWrapper.appendChild(newDealerCardDiv);
+        }
+    }
+
+    if(dealerScore < userScore || dealerScore > 21) {
+        userWins();
+    }else if(dealerScore > userScore && dealerScore <= 21) {
+        userLoses();
+    }else if(userScore == dealerScore) {
+        draw();
+    }
+}
+
+function userWins() {
+    updateUserScore();
+    roundStart = false;
+    gameMessageWrapper.style.display = "block";
+    if(userScore == 21) {
+        gameMessage.innerText = "Blackjack! Player Wins!";
+    }else {
+        gameMessage.innerText = "Player Wins!";
+    }
+
+    bankBalance.innerText = (3/2)*parseInt(betAmount.innerText) + parseInt(bankBalance.innerText);
+    betAmount.innerText = 0;
+}
+
+function userLoses() {
+    updateDealerScore();
+    updateUserScore();
+    roundStart = false;
+    gameMessageWrapper.style.display = "block";
+    if(dealerScore == 21) {
+        gameMessage.innerText = "Blackjack. Player Loses.";
+    }else if(userScore > 21){
+        gameMessage.innerText = "Player Busts.";
+    }else {
+        gameMessage.innerText = "Dealer wins."
+    }
+
+    betAmount.innerText = 0;
+}
+
+function draw() {
+    updateDealerScore();
+    updateUserScore();
+    roundStart = false;
+    gameMessage.innerText = "It's a Draw."
+    gameMessageWrapper.style.display = "block";
+
+    bankBalance.innerText = parseInt(bankBalance.innerText) + parseInt(betAmount.innerText);
+    betAmount.innerText = 0;
+}
+
+function clearHands() {
+    while(userCardWrapper.firstChild) {
+        userCardWrapper.removeChild(userCardWrapper.firstChild);
+    }
+
+    while(dealerCardWrapper.firstChild) {
+        dealerCardWrapper.removeChild(dealerCardWrapper.firstChild);
+    }
+
+    for(let i=0;i<2;i++) {
+        let newDealerCard = document.createElement("div");
+        let newUserCard = document.createElement("div");
+
+        newDealerCard.classList.add("dealer-card");
+        newUserCard.classList.add("user-card");
+
+        dealerCardWrapper.appendChild(newDealerCard);
+        userCardWrapper.appendChild(newUserCard);
+    }
+}
+
+function newGame() {
+    clearHands();
+    userScore = 0;
+    dealerScore = 0;
+    userHand = [];
+    dealerHand = [];
+    bankBalance.innerText = 1500;
+    betAmount.innerText = 0;
+    gameMessageWrapper.style.display = "none";
+}
+
+newGameBtn.addEventListener("click", newGame);
 dealBtn.addEventListener("click", dealInitialCards);
 chip1.addEventListener("click",acceptBet);
 chip5.addEventListener("click",acceptBet);
