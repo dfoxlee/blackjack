@@ -506,7 +506,7 @@ function userWins() {
         gameMessage.innerText = "Player Wins!";
     }
 
-    bankBalance.innerText = (3/2)*parseInt(betAmount.innerText) + parseInt(bankBalance.innerText);
+    bankBalance.innerText = Math.floor((3/2)*parseInt(betAmount.innerText) + parseInt(bankBalance.innerText));
     betAmount.innerText = 0;
 }
 
