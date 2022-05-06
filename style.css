@@ -200,6 +200,7 @@ header h1 {
 .game-message {
   color: darkred;
   padding: 20px;
+  text-align: center;
 }
 
 /* CARDS SECTION */
