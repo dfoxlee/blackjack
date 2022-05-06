@@ -496,6 +496,8 @@ function updateDealerHand() {
 
 function userWins() {
     updateUserScore();
+    hitBtn.removeEventListener("click", hitUserCard);
+    stayBtn.removeEventListener("click", updateDealerHand);
     roundStart = false;
     gameMessageWrapper.style.display = "block";
     if(userScore == 21) {
@@ -511,6 +513,8 @@ function userWins() {
 function userLoses() {
     updateDealerScore();
     updateUserScore();
+    hitBtn.removeEventListener("click", hitUserCard);
+    stayBtn.removeEventListener("click", updateDealerHand);
     roundStart = false;
     gameMessageWrapper.style.display = "block";
     if(dealerScore == 21) {
