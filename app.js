@@ -217,6 +217,11 @@ function addDealerCard() {
 }
 
 function acceptBet(ele) {
+    if(roundStart == false && parseInt(bankBalance.innerText) == 0 && parseInt(betAmount.innerText) == 0) {
+        gameMessage.innerHTML = "You are broke.<br/>Start a new game to play again.";
+        gameMessageWrapper.style.display = "block";
+        return;
+    }
     if(roundStart == false) {
         let currentBet = parseInt(betAmount.innerHTML);
         let currentBankBalance = parseInt(bankBalance.innerHTML);
