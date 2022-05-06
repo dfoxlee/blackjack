@@ -337,6 +337,10 @@ function dealInitialCards() {
 
         hitBtn.addEventListener("click", hitUserCard);
         stayBtn.addEventListener("click", updateDealerHand);
+
+        if(userScore == 21) {
+            userWins();
+        }
     }
 }
 
